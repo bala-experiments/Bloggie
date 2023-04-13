@@ -12,6 +12,8 @@
         public DateTime PublishedDate { get; set; }
         public string Author { get; set; }
         public bool Visible { get; set; }
+        
+        //This is a navigation property
         public ICollection<Tag> Tags { get; set; } // Blogpost can have multiple tags, creating many-many relationhsip
 
     }

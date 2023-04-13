@@ -36,13 +36,13 @@ namespace Bloggie.Web.Repositories
         }
 
         public async Task<IEnumerable<BlogPost>> GetAllAsync()
-        {
-            return await _bloggieDbContext.BlogPosts.ToListAsync();
+        {            
+            return await _bloggieDbContext.BlogPosts.Include(x=>x.Tags).ToListAsync();
         }
 
         public async Task<BlogPost?> GetSync(Guid ID)
         {
-            return await _bloggieDbContext.BlogPosts.FirstOrDefaultAsync(x => x.ID == ID);
+            return await _bloggieDbContext.BlogPosts.Include(x=>x.Tags).FirstOrDefaultAsync(x => x.ID == ID);
         }
 
         public async Task<BlogPost?> UpdateAsync(BlogPost blogpost)
@@ -60,6 +60,7 @@ namespace Bloggie.Web.Repositories
                 existingtag.PublishedDate = blogpost.PublishedDate;
                 existingtag.Author = blogpost.Author;
                 existingtag.Visible = blogpost.Visible;
+                existingtag.Tags = blogpost.Tags;
 
                 await _bloggieDbContext.SaveChangesAsync();
 

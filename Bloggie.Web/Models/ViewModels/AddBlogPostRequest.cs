@@ -20,4 +20,24 @@ namespace Bloggie.Web.Models.ViewModels
         //SelectedTag
         public string[] SelectedTags { get; set; } = Array.Empty<string>();
     }
+
+    public class EditBlogPostRequest
+    {
+        public Guid ID { get; set; }
+        public string Heading { get; set; }
+        public string PageTitle { get; set; }
+        public string Content { get; set; }
+        public string ShortDescription { get; set; }
+        public string FeaturedImageUrl { get; set; }
+        public string UrlHandle { get; set; }
+        public DateTime PublishedDate { get; set; }
+        public string Author { get; set; }
+        public bool Visible { get; set; }
+
+        //To display all the tags in dropdown
+        public IEnumerable<SelectListItem> Tags { get; set; }
+
+        //SelectedTag
+        public string[] SelectedTags { get; set; } = Array.Empty<string>();
+    }
 }

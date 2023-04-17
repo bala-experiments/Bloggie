@@ -69,7 +69,7 @@ namespace Bloggie.Web.Controllers
             //Invoke repository to save data in db
             await blogpostRepository.AddAsync(BlogPostModel);           
 
-            return RedirectToAction("Add");
+            return RedirectToAction("List");
             
         }
 

@@ -1,5 +1,7 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using Bloggie.Web.Repositories;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using System.Net;
 
 namespace Bloggie.Web.Controllers
 {
@@ -7,9 +9,22 @@ namespace Bloggie.Web.Controllers
     [ApiController]
     public class ImagesController : ControllerBase
     {
+        private readonly IImageRepository imageRepository;
+
+        public ImagesController(IImageRepository imageRepository)
+        {
+            this.imageRepository = imageRepository;
+        }
         public async Task<IActionResult> UploadSync(IFormFile file)
         {
-            return Ok("This is the best image api call");
+           var imageurl = await imageRepository.UploadAsync(file);  
+
+            if (imageurl == null)
+            {
+                return Problem("Something went wrong!!",null,(int)HttpStatusCode.InternalServerError);
+            }
+
+            return new JsonResult(new {Link = imageurl});
         }
 
     }

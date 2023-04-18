@@ -25,8 +25,13 @@
             <input type="text" class="form-control" id="shortdescription" asp-for="ShortDescription" />
         </div>
         <div class="mb-3">
+            <label class="form-label">Image Upload</label>
+            <input type="file" id="featuredImageUpload" class="form-control" />
+        </div>
+        <div class="mb-3">
             <label class="form-label">Featured Image Url</label>
             <input type="text" class="form-control" id="featuredimageurl" asp-for="FeaturedImageUrl" />
+            <img src="" id="featuredimagedisplay" style="display:none;width:100px;height:100px"/>
         </div>
         <div class="mb-3">
             <label class="form-label">Url Handle</label>
@@ -57,7 +62,44 @@
 </div>
 
 @section Scripts {
-        <script>
-        var editor = new FroalaEditor('#content');
+        
+    <script>
+        var editor = new FroalaEditor('#content', {
+            imageUploadURL: '/api/images'
+        });
+
+        var featuredUploadElement = document.getElementById('featuredImageUpload');
+
+        async function uploadFeaturedImage(e)
+        {
+            console.log(e.target.files[0]);
+
+            let data = new FormData();
+            data.append('file', e.target.files[0]);
+
+            await fetch('/api/images/',{
+                method: 'POST',
+                headers: {
+                    'Accept':'*/*'
+                },
+                body: data
+            }).then(response => response.json())
+              .then(result => {
+                   
+                    document.getElementById('featuredimageurl').value = result.link;
+                    if (result.link!= ""){
+                        document.getElementById('featuredimagedisplay').src = result.link;
+                        document.getElementById('featuredimagedisplay').style.display = "block";
+                    }
+                    
+              });           
+
+
+        }
+
+       
+
+        featuredUploadElement.addEventListener('change',uploadFeaturedImage);
+
     </script>
 }

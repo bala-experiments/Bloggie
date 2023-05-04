@@ -60,7 +60,7 @@ namespace Bloggie.Web.Repositories
                 existingtag.PublishedDate = blogpost.PublishedDate;
                 existingtag.Author = blogpost.Author;
                 existingtag.Visible = blogpost.Visible;
-                existingtag.Tags = blogpost.Tags;
+              // existingtag.Tags = blogpost.Tags;
 
                 await _bloggieDbContext.SaveChangesAsync();
 

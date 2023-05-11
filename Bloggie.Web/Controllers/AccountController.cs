@@ -53,12 +53,16 @@ namespace Bloggie.Web.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> Login(LoginViewModel loginViewModel)
+        public async Task<IActionResult> Login(LoginViewModel loginViewModel,string ReturnUrl)
         {
            var loginresult = await signInManager.PasswordSignInAsync(loginViewModel.UserName, loginViewModel.Password, false, false);
            
             if (loginresult.Succeeded)
             {
+                if (ReturnUrl != null)
+                {
+                    return Redirect(ReturnUrl);
+                }
                 return RedirectToAction("Index","Home");
             }
             

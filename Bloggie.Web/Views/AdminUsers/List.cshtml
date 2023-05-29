@@ -1,0 +1,63 @@
+﻿@model Bloggie.Web.Models.ViewModels.UserViewModel
+@{
+    ViewData["Title"] = "List Users";
+}
+
+<div class="bg-secondary bg-opacity-10 py-2">
+    <div class="container">
+        <h1>List Users - Admin functionality</h1>
+    </div>
+</div>
+
+<form method="post">
+    <div class="container py-5">
+
+
+        <table class="table">
+            <thead>
+                <tr>
+                    <td>ID</td>
+                    <td>User Name</td>
+                    <td>Email Address</td>
+                    <td>&nbsp;</td>
+                </tr>
+            </thead>
+            @if (Model.UsersList != null && Model.UsersList.Any())
+            {
+                <tbody>
+                    @foreach (var tag in Model.UsersList)
+                    {
+                        <tr>
+                            <td>@tag.Id</td>
+                            <td>@tag.Username</td>
+                            <td>@tag.EmailAddress</td>
+                            <td>
+                                <a class="btn btn-dark ms-2"
+                           asp-controller="AdminUsers"
+                           asp-action="Edit"
+                           asp-route-id="@tag.Id">
+                                    Edit
+                                </a>
+
+                                <button type="submit" class="btn btn-danger ms-2"
+                                asp-area=""
+                                asp-controller="AdminUsers"
+                                asp-action="Delete"
+                                asp-route-ID="@tag.Id">
+                                    Delete
+                                </button>
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            }
+            else
+            {
+                <tr>
+                    <td colspan="3" align="center">No data found</td>
+                </tr>
+            }
+        </table>
+
+    </div>
+</form>

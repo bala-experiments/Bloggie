@@ -62,7 +62,7 @@ namespace Bloggie.Web.Data
             var superAdminUser = new IdentityUser()
             {
                 UserName = "bala.kodis@gmail.com",
-                Email   = "bala.kodis@gmial.com",
+                Email   = "bala.kodis@gmail.com",
                 NormalizedEmail = "bala.kodis@gmail.com".ToUpper(),
                 NormalizedUserName = "bala.kodis@gmail.com".ToUpper(),
                 Id = superadminuserid

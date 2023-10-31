@@ -55,22 +55,40 @@ namespace Bloggie.Web.Controllers
                 if (request.IsAdminUser)
                 {
                     roles.Add("Admin");
+                }               
+
+                identityResult = await userManager.AddToRolesAsync(identityuser, roles);
+
+                if (identityResult.Succeeded && identityResult is not null)
+                {
+                    TempData["Status"] = "User created successfully";
+                    return RedirectToAction("List");
                 }
-
-                await userManager.AddToRolesAsync(identityuser, roles);
-
-                //identityResult  = await userManager.AddToRolesAsync(identityuser, roles);
-
-                //if (identityResult.Succeeded && identityResult is not null)
-                //{
-                //    return RedirectToAction("List");
-                //}
 
             }
 
             return RedirectToAction("List");
 
 
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> Delete(Guid Id)
+        {
+            var user = await userManager.FindByIdAsync(Id.ToString());
+
+            if(user is not null)
+            {
+                var identityResult = await userManager.DeleteAsync(user);
+
+                if(identityResult is not null && identityResult.Succeeded)
+                {
+                    TempData["Status"] = "User deleted successfully";
+                    return RedirectToAction("List");
+                }
+            }
+
+            return View();
         }
     }
 }
